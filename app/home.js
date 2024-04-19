@@ -10,8 +10,9 @@ import { Feather, FontAwesome6, Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { theme } from '../constants/theme';
 import { hp, wp } from '../helpers/common';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Categories from '../components/categories';
+import { apiCall } from '../api';
 
 const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
@@ -19,6 +20,15 @@ const HomeScreen = () => {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState(null);
   const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    fethImages();
+  });
+
+  const fethImages = async (params = { page: 1 }, append = true) => {
+    const res = await apiCall(params);
+    console.log('result', res.data);
+  };
 
   const handleChangeCategory = (cat) => {
     setActiveCategory(cat);
