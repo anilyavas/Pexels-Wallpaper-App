@@ -5,8 +5,10 @@ import { wp, hp } from '@/helpers/common';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { theme } from '@/constants/theme';
+import { useRouter } from 'expo-router';
 
 const WelcomePage = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Image
@@ -27,13 +29,26 @@ const WelcomePage = () => {
           end={{ x: 0.5, y: 0.8 }}
         />
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Pexels</Text>
-          <Text style={styles.punchline}>Every Pixel Tells a Story</Text>
-          <View>
-            <Pressable style={styles.button}>
+          <Animated.Text
+            entering={FadeInDown.delay(400).springify()}
+            style={styles.title}
+          >
+            Pexels
+          </Animated.Text>
+          <Animated.Text
+            entering={FadeInDown.delay(500).springify()}
+            style={styles.punchline}
+          >
+            Every Pixel Tells a Story
+          </Animated.Text>
+          <Animated.View entering={FadeInDown.delay(600).springify()}>
+            <Pressable
+              onPress={() => router.push('home')}
+              style={styles.button}
+            >
               <Text style={styles.startText}>Start Explore</Text>
             </Pressable>
-          </View>
+          </Animated.View>
         </View>
       </Animated.View>
 
@@ -66,7 +81,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: hp(7),
-    color: theme.colors.neutral(0.9),
+    color: theme.colors.black,
     fontWeight: theme.fontWeights.bold,
   },
   punchline: {
